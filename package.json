@@ -1,12 +1,12 @@
 {
-  "name": "videojs-contrib-ads",
+  "name": "ozon1234-videojs-contrib-ads",
   "description": "A framework that provides common functionality needed by video advertisement libraries working with video.js.",
   "main": "es5/plugin.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/videojs/videojs-contrib-ads.git"
+    "url": "https://github.com/ozon1234/videojs-contrib-ads.git"
   },
-  "version": "4.2.1",
+  "version": "4.2.2",
   "author": "Brightcove",
   "engines": {
     "node": ">= 0.8.0"

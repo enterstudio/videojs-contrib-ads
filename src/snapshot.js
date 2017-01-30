@@ -196,7 +196,10 @@ export function restorePlayerSnapshot(player, snapshotObject) {
 
   if (player.ads.videoElementRecycled()) {
     // on ios7, fiddling with textTracks too early will cause safari to crash
-    player.one('contentloadedmetadata', restoreTracks);
+    player.one([ 'contentloadedmetadata', 'loadedmetadata' ], function f() {
+      player.off([ 'contentloadedmetadata', 'loadedmetadata' ], f);
+      restoreTracks();
+    });
 
     // if the src changed for ad playback, reset it
     player.src({ src: snapshotObject.currentSrc, type: snapshotObject.type });
@@ -205,7 +208,10 @@ export function restorePlayerSnapshot(player, snapshotObject) {
     // and then resume from the snapshots time once the original src has loaded
     // in some browsers (firefox) `canplay` may not fire correctly.
     // Reace the `canplay` event with a timeout.
-    player.one('contentcanplay', tryToResume);
+    player.one([ 'contentcanplay', 'canplay' ], function f() {
+      player.off([ 'contentcanplay', 'canplay' ], f);
+      tryToResume();
+    });
     player.ads.tryToResumeTimeout_ = player.setTimeout(tryToResume, 2000);
   } else if (!player.ended() || !snapshotObject.ended) {
     // if we didn't change the src, just restore the tracks
